@@ -6,7 +6,7 @@ class LoginPage {
     // Defining the Locators (The "Where")
     this.usernameInput = page.locator('#user-name');
     this.passwordInput = page.locator('#password');
-    this.loginButton = page.locator('#login-button');
+    this.loginButton = page.locator('#login-button-WRONG');
   }
 
   // Defining the Actions (The "How")
