@@ -1,0 +1,20 @@
+[
+  {
+    "firstName": "Alice",
+    "lastName": "Smith",
+    "zip": "12345",
+    "desc": "Standard US Address"
+  },
+  {
+    "firstName": "Bob",
+    "lastName": "O'Reilly",
+    "zip": "E1 6AN",
+    "desc": "UK Format Address"
+  },
+  {
+    "firstName": "Li",
+    "lastName": "W",
+    "zip": "99",
+    "desc": "Short Name/Zip"
+  }
+]

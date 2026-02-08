@@ -3,26 +3,29 @@ const { LoginPage } = require('../pages/login.page');
 const { ProductsPage } = require('../pages/products.page');
 const { CartPage } = require('../pages/cart.page');
 const { CheckoutPage } = require('../pages/checkout.page');
+// 1. Import your data
+const testData = require('../data/users.json');
 
-test('should complete a full purchase flow', async ({ page }) => {
-  const loginPage = new LoginPage(page);
-  const productsPage = new ProductsPage(page);
-  const cartPage = new CartPage(page);
-  const checkoutPage = new CheckoutPage(page);
+// 2. Loop through each user in the JSON file
+for (const user of testData) {
+  test(`Complete purchase for: ${user.desc}`, async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    const productsPage = new ProductsPage(page);
+    const cartPage = new CartPage(page);
+    const checkoutPage = new CheckoutPage(page);
 
-  // 1. Setup: Login and add item
-  await loginPage.goto();
-  await loginPage.login('standard_user', 'secret_sauce');
-  await productsPage.addBackpackToCart();
-  
-  // 2. Navigation: Go to Cart -> Checkout
-  await productsPage.cartLink.click();
-  await cartPage.goToCheckout();
+    await loginPage.goto();
+    await loginPage.login('standard_user', 'secret_sauce');
+    
+    await productsPage.addBackpackToCart();
+    await productsPage.cartLink.click();
+    
+    await cartPage.goToCheckout();
 
-  // 3. Action: Fill out info and Finish
-  await checkoutPage.fillInformation('John', 'Doe', '12345');
-  await checkoutPage.completePurchase();
+    // 3. Use the dynamic data from the JSON
+    await checkoutPage.fillInformation(user.firstName, user.lastName, user.zip);
+    await checkoutPage.completePurchase();
 
-  // 4. Verification: Did we win?
-  await expect(checkoutPage.successMessage).toHaveText('Thank you for your order!');
-});
+    await expect(checkoutPage.successMessage).toHaveText('Thank you for your order!');
+  });
+}
